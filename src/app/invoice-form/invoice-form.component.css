@@ -1,0 +1,65 @@
+/* Center the card and set its width to 75% */
+p-card {
+    width: 75%; 
+    margin: 0 auto; /* This will center the card horizontally */
+}
+
+/* Add the same CSS for responsiveness */
+.text-center {
+    text-align: center;
+}
+
+.p-fluid {
+    padding: 0.5rem 1rem;
+}
+
+.p-inputtext-lg {
+    width: 100%;
+}
+
+.p-col-12 {
+    margin-bottom: 10px; /* Ensure spacing between form fields */
+}
+
+.p-button-rounded {
+    width: 100%;
+}
+
+/* For small screens, allow responsive adjustments */
+@media (max-width: 768px) {
+    .p-col-12 {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .p-md-6, .p-lg-4, .p-xl-3 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .p-grid {
+        margin: 0;
+    }
+}
+
+@media (max-width: 576px) {
+    .p-col-12, .p-md-6, .p-lg-4 {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .p-button-info, .p-button-success {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1200px) {
+    .p-lg-2 {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .p-button-success, .p-button-info {
+        margin-top: 1rem;
+    }
+}

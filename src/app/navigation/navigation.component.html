@@ -1,0 +1,13 @@
+
+<nav class="navbar">
+    <ul class="nav-links">
+      
+      <li class="nav-item" [class.active]="activeLink === 'invoiceForm'">
+        <a (click)="setActiveLink('invoiceForm')" routerLink="/invoiceForm" routerLinkActive="active" class="nav-link">Invoice Form</a>
+      </li>
+      <li class="nav-item" [class.active]="activeLink === 'invoiceList'">
+        <a (click)="setActiveLink('invoiceList')" routerLink="/invoiceList" routerLinkActive="active" class="nav-link">Invoice List</a>
+      </li>
+    </ul>
+  </nav>
+  

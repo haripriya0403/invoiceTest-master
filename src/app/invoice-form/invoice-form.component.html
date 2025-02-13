@@ -1,0 +1,78 @@
+
+<div class="text-center"> <h3>Invoice Form</h3></div>
+
+<p-card>
+    <form [formGroup]="invoiceForm" (ngSubmit)="submitInvoice()">
+      <div class="p-fluid p-grid">
+  
+        <!-- Name and Address Fields (Responsive) -->
+        <div class="p-col-12 p-md-6 p-lg-4 p-xl-3">
+          <div class="p-fluid">
+            <label for="name">Name</label>
+            <input id="name" type="text" formControlName="name" pInputText class="p-inputtext-lg" />
+          </div>
+        </div>
+  
+        <div class="p-col-12 p-md-6 p-lg-4 p-xl-3">
+          <div class="p-fluid">
+            <label for="address">Address</label>
+            <input id="address" type="text" formControlName="address" pInputText class="p-inputtext-lg" />
+          </div>
+        </div>
+  
+        <!-- Dynamic Items (Responsive Form Array) -->
+        <div formArrayName="items">
+          <div *ngFor="let item of items.controls; let i = index" [formGroupName]="i" class="p-col-12 p-md-12 p-lg-12">
+            <div class="p-fluid p-grid p-align-center p-gap-3">
+  
+              <!-- Item Name Field -->
+              <div class="p-col-12 p-md-3 p-lg-2">
+                <label for="itemName">Item Name</label>
+                <input id="itemName" type="text" formControlName="itemName" pInputText class="p-inputtext-lg" />
+              </div>
+  
+              <!-- Quantity Field -->
+              <div class="p-col-12 p-md-2 p-lg-1">
+                <label for="quantity">Quantity</label>
+                <input id="quantity" type="number" formControlName="quantity" pInputText class="p-inputtext-lg" />
+              </div>
+  
+              <!-- Rate Field -->
+              <div class="p-col-12 p-md-2 p-lg-1">
+                <label for="rate">Rate</label>
+                <input id="rate" type="number" formControlName="rate" pInputText class="p-inputtext-lg" />
+              </div>
+  
+              <!-- Total Field (Auto-calculated) -->
+              <div class="p-col-12 p-md-2 p-lg-1">
+                <label for="total">Total</label>
+                <input id="total" type="number" formControlName="total" pInputText class="p-inputtext-lg"  />
+              </div>
+  
+              <!-- Remove Item Button -->
+              <div class="p-col-12 p-md-1 p-lg-1 p-d-flex p-align-center">
+                <button type="button" pButton label="X" (click)="removeItem(i)" class="p-button-danger p-button-rounded"></button>
+              </div>
+  
+            </div>
+          </div>
+        </div>
+  
+      
+        <!-- Add New Item Button -->
+        <div class="p-col-12">
+          <button type="button" pButton label="+ Item" (click)="addItem()" class="p-button-info p-button-rounded"></button>
+        </div>
+        <div class="p-col-12 p-md-2 p-lg-1">
+            <label for="grandTotal">Grand Total</label>
+            <input id="grandTotal" type="number" formControlName="grandTotal" pInputText class="p-inputtext-lg"  [value]="calculateGrandTotal()"/>
+          </div>
+        <!-- Submit Button -->
+        <div class="p-col-12 mt-3">
+          <button pButton type="submit" label="Submit" [disabled]="invoiceForm.invalid" class="p-button-success p-button-rounded"></button>
+        </div>
+  
+      </div>
+    </form>
+  </p-card>
+  
