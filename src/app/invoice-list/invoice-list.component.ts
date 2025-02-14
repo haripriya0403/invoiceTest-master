@@ -1,38 +1,54 @@
 import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
-import { isPlatformBrowser } from '@angular/common';
 import { InputTextModule } from 'primeng/inputtext';
 import { CardModule } from 'primeng/card';
+import {InvoiceService} from '../services/invoice.service';
+import { FormsModule } from '@angular/forms'; // Import FormsModule
 
 @Component({
   selector: 'app-invoice-list',
-  imports: [CommonModule, TableModule,InputTextModule , CardModule],
+  standalone: true,
+  imports: [CommonModule,FormsModule , TableModule,InputTextModule , CardModule],
   templateUrl: './invoice-list.component.html',
   styleUrls: ['./invoice-list.component.css']
 })
 export class InvoiceListComponent implements OnInit {
   Invoices: any[] = []; // Initialize the Invoices array
   selectedInvoice: any = null; // Holds the selected invoice data
+  filteredInvoices: any[] = []; // Holds the filtered invoice data
+  searchTerm: string = ''; // Holds the search term entered by the user
 
-  constructor(@Inject(PLATFORM_ID) private platformId: any) {}
+  constructor(private InvoiceService:InvoiceService) {}
 
-  ngOnInit(): void {
-    // Log the platform to debug if the code is running in the correct environment
-    console.log('Platform ID:', this.platformId);
-
-    // Check if we're in the browser before accessing localStorage
-    if (isPlatformBrowser(this.platformId)) {
-      const storedData = localStorage.getItem('invoiceData');
-      if (storedData) {
-        const parsedData = JSON.parse(storedData);
-        this.Invoices.push(parsedData);
-      } else {
-        console.log('No invoice data found in localStorage');
+   ngOnInit(): void {
+    // Fetch invoices from the API
+    this.InvoiceService.getAllInvoices().subscribe(
+      (data: any) => {
+        this.Invoices = data;  // Assuming 'data' contains the invoice array
+        this.filteredInvoices = [...this.Invoices]; // Initially, set filteredInvoices to all invoices
+        console.log('Invoices fetched from API:', this.Invoices);
+      },
+      (error) => {
+        console.error('Error fetching invoices from API:', error);
       }
-    } else {
-      console.log('localStorage is not available in this environment');
-    }
+    );
+  }
+
+  // Filter invoices based on the search term
+  filterInvoices(): void {
+    const term = this.searchTerm.toLowerCase();
+
+    this.filteredInvoices = this.Invoices.filter(invoice => 
+      (invoice.invoiceId && invoice.invoiceId.toString().toLowerCase().includes(term)) ||
+      (invoice.name && invoice.name.toLowerCase().includes(term)) ||
+      (invoice.date && invoice.date.toLowerCase().includes(term))
+    );
+  }
+
+  // Watch for changes in the search term and filter the invoices accordingly
+  ngOnChanges(): void {
+    this.filterInvoices();
   }
    // Function to display the preview dialog
    preview(invoice: any): void {
