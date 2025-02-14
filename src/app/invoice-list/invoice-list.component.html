@@ -1,106 +1,75 @@
 <div class="text-center">
-    <h3>Invoice List</h3>
+  <h3>Invoice List</h3>
+</div>
+
+<p-card>
+  <div class="p-d-flex p-jc-between">
+    <div>
+      <!-- Single Search Bar -->
+      <input
+        type="text"
+        pInputText
+        [(ngModel)]="searchTerm"
+        placeholder="Search by Invoice ID, Name or Date"
+      />
+    </div>
   </div>
-  
-  <p-card>
-    <p-table
-      [value]="Invoices"
-      [paginator]="true"
-      [rows]="5"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      [rowsPerPageOptions]="[5, 10, 20]"
-      showGridlines stripedRows
-    >
-      <ng-template pTemplate="header">
-        <tr>
-            <th pSortableColumn="invoiceId" class="header-column">
-                Invoice No <p-sortIcon field="invoiceId" />
-              </th>
-              <th pSortableColumn="date" class="header-column">
-                Invoice Date <p-sortIcon field="date" />
-              </th>
-          <th pSortableColumn="name" class="header-column">
-            Name <p-sortIcon field="name" />
-          </th>
-          <th pSortableColumn="address" class="header-column">
-            Address <p-sortIcon field="address" />
-          </th>
-          <th pSortableColumn="items" class="header-column">
-            Items <p-sortIcon field="items" />
-          </th>
-          <th pSortableColumn="items" class="header-column">
-            Grand Total <p-sortIcon field="items" />
-          </th>
-          <th pSortableColumn="items" class="header-column">
-            Preview <p-sortIcon field="items" />
-          </th>
-        </tr>
-        <tr>
-            <th>
-                <p-columnFilter
-                  type="text"
-                  field="invoiceId"
-                  placeholder="Search by Invoice No"
-                  ariaLabel="Filter invoiceId"
-                ></p-columnFilter>
-              </th>
-              <th>
-                <p-columnFilter
-                  type="text"
-                  field="date"
-                  placeholder="Search by Date"
-                  ariaLabel="Filter date"
-                ></p-columnFilter>
-              </th>
-          <th>
-            <p-columnFilter
-              type="text"
-              field="name"
-              placeholder="Search by Name"
-              ariaLabel="Filter Name"
-            ></p-columnFilter>
-          </th>
-          <th>
-            <p-columnFilter
-              type="text"
-              field="address"
-              placeholder="Search by Address"
-              ariaLabel="Filter Address"
-            ></p-columnFilter>
-          </th>
-          <th>
-            
-          </th><th>
-            
-          </th><th>
-            
-          </th>
-        </tr>
-      </ng-template>
-  
-      <ng-template pTemplate="body" let-invoice>
-        <tr>
-            <td>{{invoice.invoiceId}}</td>
-            <td>{{invoice.date}}</td>
-          <td>{{ invoice.name }}</td>
-          <td>{{ invoice.address }}</td>
-          <td>
-            <span *ngFor="let item of invoice.items; let last = last">
-              <strong>Item Name:</strong> {{ item.itemName }}<br />
-              <strong>Quantity:</strong> {{ item.quantity }}<br />
-              <strong>Rate:</strong> {{ item.rate }}<br />
-              <strong>Total:</strong> {{ item.total }}<br />
-              <span *ngIf="!last"><br /></span>
-            </span>
-          </td>
-          <td class="text-color:red">{{ invoice.grandTotal }} </td>
-          <td class="text-color:red" (click)="preview(invoice)">
-            <button>Preview</button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </p-card>
-  
- 
-  
+
+  <p-table
+    [value]="filteredInvoices"
+    [paginator]="true"
+    [rows]="5"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    showGridlines
+    stripedRows
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="invoiceId" class="header-column">
+          Invoice No <p-sortIcon field="invoiceId" />
+        </th>
+        <th pSortableColumn="date" class="header-column">
+          Invoice Date <p-sortIcon field="date" />
+        </th>
+        <th pSortableColumn="name" class="header-column">
+          Name <p-sortIcon field="name" />
+        </th>
+        <th pSortableColumn="address" class="header-column">
+          Address <p-sortIcon field="address" />
+        </th>
+        <th pSortableColumn="items" class="header-column">
+          Items <p-sortIcon field="items" />
+        </th>
+        <th pSortableColumn="items" class="header-column">
+          Grand Total <p-sortIcon field="items" />
+        </th>
+        <th pSortableColumn="items" class="header-column">
+          Preview <p-sortIcon field="items" />
+        </th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-invoice>
+      <tr>
+        <td>{{ invoice.invoiceId }}</td>
+        <td>{{ invoice.date }}</td>
+        <td>{{ invoice.name }}</td>
+        <td>{{ invoice.address }}</td>
+        <td>
+          <span *ngFor="let item of invoice.items; let last = last">
+            <strong>Item Name:</strong> {{ item.itemName }}<br />
+            <strong>Quantity:</strong> {{ item.quantity }}<br />
+            <strong>Rate:</strong> {{ item.rate }}<br />
+            <strong>Total:</strong> {{ item.total }}<br />
+            <span *ngIf="!last"><br /></span>
+          </span>
+        </td>
+        <td class="text-color:red">{{ invoice.grandTotal }} </td>
+        <td class="text-color:red" (click)="preview(invoice)">
+          <button>Preview</button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>
