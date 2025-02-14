@@ -40,7 +40,7 @@ export class InvoiceListComponent implements OnInit {
     const term = this.searchTerm.toLowerCase();
 
     this.filteredInvoices = this.Invoices.filter(invoice => 
-      (invoice.invoiceId && invoice.invoiceId.toString().toLowerCase().includes(term)) ||
+      (invoice.invoiceid && invoice.invoiceid.toString().toLowerCase().includes(term)) ||
       (invoice.name && invoice.name.toLowerCase().includes(term)) ||
       (invoice.date && invoice.date.toLowerCase().includes(term))
     );
@@ -116,7 +116,7 @@ export class InvoiceListComponent implements OnInit {
                 
               </tr>
               <tr>
-               <td>${this.selectedInvoice.invoiceId || ''}</td>
+               <td>${this.selectedInvoice.invoiceid || ''}</td>
                <td>${this.selectedInvoice.name || ''}</td>
                
               </tr>
